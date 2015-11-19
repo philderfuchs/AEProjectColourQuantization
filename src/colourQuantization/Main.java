@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
@@ -14,15 +15,42 @@ public class Main {
 		 
 	        try {
 	        	PixelReader pixelReader = new PixelReader("resources/samplePalette.png");
-	        	HashMap<Color, Integer> histogram = pixelReader.getHistogram();
-	        	for (Color c : histogram.keySet()) {
-	        		System.out.println("Color: " + c.getRed() + ", " + c.getGreen() + ", " + c.getBlue() + " | Count: " + histogram.get(c));
+	        	ArrayList<Pixel> histogram = pixelReader.getHistogram();
+
+	        	
+	        	for (Pixel p : histogram) {
+	        		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB() + " | Count: " + p.getCount());
 	        	}
-//				for (Color c : pixelData){
-//					System.out.println("(" + c.getRed() + ", " + c.getGreen() + ", " + c.getBlue() + ")");
-//				}
-//				System.out.println(pixelData.length + " Pixels read.");
-				
+
+	        	Cube cube = new Cube(0, 256, 0, 256, 0, 256, histogram);
+	        	cube.shrink();
+	        	
+	        	System.out.println(cube.getgMin());
+	        	System.out.println(cube.getgMax());
+	        	
+	        	int rDistance = 0;
+	        	int gDistance = 0;
+	        	int bDistance = 0;
+	        	rDistance = cube.getrMax()-cube.getrMin();
+	        	gDistance = cube.getgMax()-cube.getgMin();
+	        	bDistance = cube.getbMax()-cube.getbMin();
+
+	        	if(rDistance > gDistance) {
+	        		if(rDistance > bDistance) {
+	        			System.out.println("red" + rDistance);
+	        		} else {
+	        			System.out.println("blue" + bDistance);
+	        		}
+	        	} else {
+	        		if(gDistance > bDistance){
+	        			System.out.println("green" + gDistance);
+	        		} else {
+	        			System.out.println("blue" + bDistance);
+	        		}
+	        	}
+	        	
+	        	// Splitting at green
+	        	
 				
 				
 			} catch (IOException e) {

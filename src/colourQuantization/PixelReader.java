@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
@@ -35,16 +36,16 @@ public class PixelReader {
 		
 	}
 	
-	public HashMap<Color, Integer> getHistogram(){
+	public ArrayList<Pixel> getHistogram(){
 		int imgHeight = img.getHeight();
 		int imgWidth = img.getWidth();
 		
-		HashMap<Color, Integer> histogram = new HashMap();
-		Color currentPixelColor;
+		HashMap<Integer, Integer> histogram = new HashMap();
+		Integer currentPixelColor;
 		
 		for(int y = 0; y < imgHeight; y++) {
 			for(int x = 0; x < imgWidth; x++) {
-				currentPixelColor = new Color(img.getRGB(x, y));
+				currentPixelColor = img.getRGB(x, y);
 				if (histogram.containsKey(currentPixelColor)){
 					histogram.put(currentPixelColor, histogram.get(currentPixelColor) + 1);
 				} else {
@@ -53,7 +54,13 @@ public class PixelReader {
 			}
 		}
 		
-		return histogram;
+		ArrayList<Pixel> pixelList = new ArrayList<>();
+		for (Integer i : histogram.keySet()) {
+			Color c = new Color(i);
+			pixelList.add(new Pixel(c.getRed(), c.getGreen(), c.getBlue(), histogram.get(i)));
+		}
+		
+		return pixelList;
 	}
 	
 }
