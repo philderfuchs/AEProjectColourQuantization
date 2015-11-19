@@ -18,9 +18,9 @@ public class Cube {
 	private int bMin;
 	private int bMax;
 	
-	private ArrayList<Pixel> histogram;
+	private Histogram histogram;
 
-	public Cube(int rMin, int rMax, int gMin, int gMax, int bMin, int bMax, ArrayList<Pixel> histogram) {
+	public Cube(int rMin, int rMax, int gMin, int gMax, int bMin, int bMax, Histogram histogram) {
 		super();
 		this.rMin = rMin;
 		this.rMax = rMax;
@@ -42,7 +42,7 @@ public class Cube {
     	bMax = 0;
     	
 		
-    	for(Pixel p : histogram) {
+    	for(Pixel p : histogram.getHistogram()) {
     		if(p.getR() < rMin) {
     			rMin = p.getR();
     		}
@@ -104,6 +104,14 @@ public class Cube {
 	}
 	public void setbMax(int bMax) {
 		this.bMax = bMax;
+	}
+
+	public Histogram getHistogram() {
+		return histogram;
+	}
+
+	public void setHistogram(Histogram histogram) {
+		this.histogram = histogram;
 	}
 
 

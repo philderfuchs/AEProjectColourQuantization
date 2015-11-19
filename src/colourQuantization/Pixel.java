@@ -1,6 +1,6 @@
 package colourQuantization;
 
-public class Pixel {
+public class Pixel implements Comparable {
 	private int r;
 	private int g;
 	private int b;
@@ -12,6 +12,12 @@ public class Pixel {
 		this.g = g;
 		this.b = b;
 		this.count = count;
+	}
+	
+	@Override
+	public int compareTo(Object o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	public int getR() {
@@ -45,6 +51,8 @@ public class Pixel {
 	public void setCount(int count) {
 		this.count = count;
 	}
+
+
 	
 	
 }

@@ -15,10 +15,10 @@ public class Main {
 		 
 	        try {
 	        	PixelReader pixelReader = new PixelReader("resources/samplePalette.png");
-	        	ArrayList<Pixel> histogram = pixelReader.getHistogram();
+	        	Histogram histogram = pixelReader.getHistogram();
 
 	        	
-	        	for (Pixel p : histogram) {
+	        	for (Pixel p : histogram.getHistogram()) {
 	        		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB() + " | Count: " + p.getCount());
 	        	}
 
@@ -49,6 +49,11 @@ public class Main {
 	        		}
 	        	}
 	        	
+	        	Histogram histo = cube.getHistogram();
+	        	histo.sort("r");
+	        	for (Pixel p : histo.getHistogram()) {
+	        		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB() + " | Count: " + p.getCount());
+	        	}
 	        	// Splitting at green
 	        	
 				

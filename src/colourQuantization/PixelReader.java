@@ -36,31 +36,32 @@ public class PixelReader {
 		
 	}
 	
-	public ArrayList<Pixel> getHistogram(){
+	public Histogram getHistogram(){
 		int imgHeight = img.getHeight();
 		int imgWidth = img.getWidth();
 		
-		HashMap<Integer, Integer> histogram = new HashMap();
+		HashMap<Integer, Integer> pixelMap = new HashMap();
 		Integer currentPixelColor;
 		
 		for(int y = 0; y < imgHeight; y++) {
 			for(int x = 0; x < imgWidth; x++) {
 				currentPixelColor = img.getRGB(x, y);
-				if (histogram.containsKey(currentPixelColor)){
-					histogram.put(currentPixelColor, histogram.get(currentPixelColor) + 1);
+				if (pixelMap.containsKey(currentPixelColor)){
+					pixelMap.put(currentPixelColor, pixelMap.get(currentPixelColor) + 1);
 				} else {
-					histogram.put(currentPixelColor, 1);
+					pixelMap.put(currentPixelColor, 1);
 				}
 			}
 		}
 		
 		ArrayList<Pixel> pixelList = new ArrayList<>();
-		for (Integer i : histogram.keySet()) {
+		for (Integer i : pixelMap.keySet()) {
 			Color c = new Color(i);
-			pixelList.add(new Pixel(c.getRed(), c.getGreen(), c.getBlue(), histogram.get(i)));
+			pixelList.add(new Pixel(c.getRed(), c.getGreen(), c.getBlue(), pixelMap.get(i)));
 		}
+		Histogram histogram = new Histogram (pixelList);
 		
-		return pixelList;
+		return histogram;
 	}
 	
 }
