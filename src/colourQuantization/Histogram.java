@@ -58,6 +58,14 @@ public class Histogram {
 		}
 
 	}
+	
+	public int getLength() {
+		return histogram.size();
+	}
+	
+	public Pixel get(int index){
+		return histogram.get(index);
+	}
 
 	public ArrayList<Pixel> getHistogram() {
 		return histogram;
@@ -66,6 +74,6 @@ public class Histogram {
 	public void setHistogram(ArrayList<Pixel> histogram) {
 		this.histogram = histogram;
 	}
-	
+
 
 }
