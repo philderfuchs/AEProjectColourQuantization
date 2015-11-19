@@ -14,7 +14,7 @@ public class Main {
 	public static void main(String[] args) {
 		 
 	        try {
-	        	PixelReader pixelReader = new PixelReader("resources/samplePalette.png");
+	        	PixelReader pixelReader = new PixelReader("resources/cover.jpg");
 	        	Histogram histogram = pixelReader.getHistogram();
 
 	        	

@@ -21,8 +21,10 @@ public class Histogram {
 			Collections.sort(histogram, new Comparator<Pixel>(){
 		        @Override
 		        public int compare(Pixel  p1, Pixel  p2) {
-		        	if (p1.getR() >= p2.getR()) {
+		        	if (p1.getR() > p2.getR()) {
 		        		return 1;
+		        	} else if(p1.getR() == p2.getR()) {
+		        		return 0;
 		        	} else {
 		        		return -1;
 		        	}
@@ -35,6 +37,8 @@ public class Histogram {
 		        public int compare(Pixel  p1, Pixel  p2) {
 		        	if (p1.getG() >= p2.getG()) {
 		        		return 1;
+		        	} else if(p1.getG() == p2.getG()) {
+		        		return 0;
 		        	} else {
 		        		return -1;
 		        	}
@@ -47,6 +51,8 @@ public class Histogram {
 		        public int compare(Pixel  p1, Pixel  p2) {
 		        	if (p1.getB() >= p2.getB()) {
 		        		return 1;
+		        	} else if(p1.getB() == p2.getB()) {
+		        		return 0;
 		        	} else {
 		        		return -1;
 		        	}
