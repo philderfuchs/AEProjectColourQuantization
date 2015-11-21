@@ -1,6 +1,5 @@
 package colourQuantization;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Map;
@@ -15,9 +14,9 @@ public class Histogram {
 		this.histogram = histogram;
 	}
 	
-	public void sort(String s) {
-		switch (s) {
-		case "r":
+	public void sort(Colors c) {
+		switch (c) {
+		case R:
 			Collections.sort(histogram, new Comparator<Pixel>(){
 		        @Override
 		        public int compare(Pixel  p1, Pixel  p2) {
@@ -31,7 +30,7 @@ public class Histogram {
 		        }
 			});
 			break;
-		case "g":
+		case G:
 			Collections.sort(histogram, new Comparator<Pixel>(){
 		        @Override
 		        public int compare(Pixel  p1, Pixel  p2) {
@@ -45,7 +44,7 @@ public class Histogram {
 		        }
 			});
 			break;
-		case "b":
+		case B:
 			Collections.sort(histogram, new Comparator<Pixel>(){
 		        @Override
 		        public int compare(Pixel  p1, Pixel  p2) {

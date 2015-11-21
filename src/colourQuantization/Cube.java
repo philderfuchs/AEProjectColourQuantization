@@ -31,6 +31,11 @@ public class Cube {
 		this.histogram = histogram;
 	}
 	
+	public Cube(Histogram histogram) {
+		super();
+		this.histogram = histogram;
+	}
+	
 	public void shrink() {
     	rMin = 256;
     	rMax = 0;
@@ -67,6 +72,35 @@ public class Cube {
     			bMax = p.getB();
     		}    		
     	}
+	}
+	
+	public Colors getLongestDistance () {
+		if (this.getrDistance() >= this.getgDistance()) {
+			if (this.getrDistance() >= this.getbDistance()) {
+				return Colors.R;
+			} else {
+				return Colors.B;
+			}
+		} else {
+			if (this.getgDistance() >= this.getbDistance()) {
+				return Colors.G;
+			} else {
+				return Colors.B;
+			}
+		}
+	}
+	
+	public int getrDistance() {
+		return rMax-rMin;
+	}
+	
+	public int getbDistance() {
+		return bMax-bMin;
+	}
+	
+	
+	public int getgDistance() {
+		return gMax-gMin;
 	}
 	
 	public int getrMin() {
