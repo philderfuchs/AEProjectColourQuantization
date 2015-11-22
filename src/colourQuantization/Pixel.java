@@ -19,6 +19,20 @@ public class Pixel implements Comparable {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	public int get(Colors c) {
+		switch (c) {
+		case R:
+			return this.r;
+		case G:
+			return this.g;
+		case B:
+			return this.b;
+		default:
+			break;
+		}
+		return 0;
+	}
 
 	public int getR() {
 		return r;

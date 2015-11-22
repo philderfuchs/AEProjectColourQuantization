@@ -6,7 +6,7 @@ import java.util.Map;
 
 import javax.swing.text.html.HTMLDocument.Iterator;
 
-public class Cube {
+public class Cube implements Comparable {
 
 	private int rMin;
 	private int rMax;
@@ -34,6 +34,21 @@ public class Cube {
 	public Cube(Histogram histogram) {
 		super();
 		this.histogram = histogram;
+	}
+	
+	public Pixel getCentroid(){
+		return new Pixel(this.rMin+this.getrDistance()/2, this.gMin+this.getgDistance()/2, this.bMin+this.getbDistance()/2, 1);
+	}
+	
+	@Override
+	public int compareTo(Object cube) {
+		if (this.getSize() < ((Cube) cube).getSize()) {
+			return 1;
+		} else if (this.getSize() == ((Cube) cube).getSize()) {
+			return 0;
+		} else {
+			return -1;
+		}
 	}
 	
 	public void shrink() {
@@ -101,6 +116,10 @@ public class Cube {
 	
 	public int getgDistance() {
 		return gMax-gMin;
+	}
+	
+	public int getSize() {
+		return this.getrDistance()*this.getgDistance()*this.getbDistance();
 	}
 	
 	public int getrMin() {

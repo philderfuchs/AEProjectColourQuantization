@@ -1,7 +1,10 @@
 package colourQuantization;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MedianCut {
 	
@@ -9,59 +12,95 @@ public class MedianCut {
 
 	public MedianCut(int count) {
 		this.count = count;
+		if((count % 2) == 1) {
+			this.count++;
+		}
 	}
 	
-	public HashMap<Integer, Integer> quantize(Histogram histogram){
+	public HashSet<Pixel> quantize(Histogram histogram){
 		
-      	Cube cube = new Cube(histogram);
-    	cube.shrink();
-    	
-    	for (Pixel p : cube.getHistogram().getHistogram()) {
-    		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB() + " | Count: " + p.getCount());
-    	}
-    	
-    	Colors colorWithLongestDistance = cube.getLongestDistance();
-    	
-    	sortHistogram(cube, colorWithLongestDistance);
-    	
+		ArrayList<Cube> cubeList = new ArrayList<>();
+		
+      	Cube initialCube = new Cube(histogram);
+      	initialCube.shrink();
+    	cubeList.add(initialCube);
+//    	int i = 0;
 
-    	ArrayList<Pixel> pixelList = new ArrayList<>();
-    	int i;
-    	for(i = 0; i < cube.getHistogram().getLength()/2; i++) {
-    		pixelList.add(cube.getHistogram().get(i));
-    	}
-    	i--;
-    	Cube cube2 = new Cube(cube.getHistogram().get(0).getR(), cube.getHistogram().get(0).getG(), cube.getHistogram().get(0).getB(),
-    			cube.getHistogram().get(i).getR(), cube.getHistogram().get(i).getG(), cube.getHistogram().get(i).getB(), new Histogram(pixelList));
+    	do {
+//    		System.out.println(i++);
+//    		for (Cube c : cubeList) {
+//    			System.out.println(c.getSize());
+//    			this.printCubeHistogram(c);
+//    		}
+//    		System.out.println("-----------------");
+    		
+    		Cube cube = this.getBiggestCube(cubeList);
+    		cubeList.remove(cube);
+        	Colors colorWithLongestDistance = cube.getLongestDistance();
+        	
+        	sortHistogram(cube, colorWithLongestDistance);
+        	
+        	int colorValueSum = this.getSumOfColorValues(cube, colorWithLongestDistance);
+        	
+        	Histogram histogramOfChildCube1 = new Histogram();
+        	Histogram histogramOfChildCube2 = new Histogram();
+        	
+        	int sum = 0;
+    		for (Pixel p : cube.getHistogram().getHistogram()) {
+    			sum += p.get(colorWithLongestDistance)*p.getCount();
+    	    	if (sum <= colorValueSum/2) {
+    				histogramOfChildCube1.add(p);
+    	    	} else {
+    				histogramOfChildCube2.add(p);
+    	    	}
+    		}
+    		
+    		Cube childCube1 = new Cube(histogramOfChildCube1);
+    		childCube1.shrink();
+    		Cube childCube2 = new Cube(histogramOfChildCube2);
+    		childCube2.shrink();
+    		
+    		cubeList.add(childCube1);
+    		cubeList.add(childCube2);
+    	} while(cubeList.size() < this.count);
+    	
+		HashSet<Pixel> reducedColorPalette = new HashSet();
+		
+		for(Cube cube : cubeList) {
+			reducedColorPalette.add(cube.getCentroid());
+		}
 
-//    	for (Pixel p : cube2.getHistogram().getHistogram()) {
+		
+//    	for (Pixel p : histogramOfChildCube1.getHistogram()) {
 //    		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB() + " | Count: " + p.getCount());
 //    	}
-//    	System.out.println("-----------");
-    	pixelList = new ArrayList<>();
-    	int j = i + 1; 
-    	for(i = j; i < cube.getHistogram().getLength(); i++) {
-    		pixelList.add(cube.getHistogram().get(i));
-    	}
-    	i--;
-    	Cube cube3 = new Cube(cube.getHistogram().get(j).getR(), cube.getHistogram().get(j).getG(), cube.getHistogram().get(j).getB(),
-    			cube.getHistogram().get(i).getR(), cube.getHistogram().get(i).getG(), cube.getHistogram().get(i).getB(), new Histogram(pixelList));
-
-//    	for (Pixel p : cube3.getHistogram().getHistogram()) {
+//    	
+//    	System.out.println("-");
+//    	
+//    	for (Pixel p : histogramOfChildCube2.getHistogram()) {
 //    		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB() + " | Count: " + p.getCount());
 //    	}
-		System.out.println("Stop");
+
 		
-//    	for (Pixel p : histogram.getHistogram()) {
-//		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB() + " | Count: " + p.getCount());
-//	}
-		
-		HashMap<Integer, Integer> reducedColorPalette = new HashMap();
 		return reducedColorPalette;
 	}
 	
-	private int getMedian(Cube cube, Colors colorWithLongestDistance) {
-		
+	private Cube getBiggestCube(ArrayList<Cube> cubeList){
+		Collections.sort(cubeList);
+		for (Cube cube : cubeList) {
+			if (cube.getHistogram().getHistogram().size() > 1) {
+				return cube;
+			}
+		}
+		return cubeList.get(0);
+	}
+	
+	private int getSumOfColorValues(Cube cube, Colors colorWithLongestDistance) {
+		int sum = 0;
+		for (Pixel p : cube.getHistogram().getHistogram()) {
+			sum += p.get(colorWithLongestDistance)*p.getCount();
+		}
+		return sum;
 	}
 
 
@@ -69,25 +108,30 @@ public class MedianCut {
 		switch (colorWithLongestDistance) {
 		case R:
         	cube.getHistogram().sort(Colors.R);
-			System.out.println("Sorting red. Distance is" + cube.getrDistance());
 			break;
 		case G:
         	cube.getHistogram().sort(Colors.G);
-			System.out.println("Sorting green. Distance is" + cube.getgDistance());
 			break;
 		case B:
         	cube.getHistogram().sort(Colors.B);
-			System.out.println("Sorting blue. Distance is" + cube.getbDistance());
 			break;
 		default:
 			break;
     	}
     	
-    	for (Pixel p : cube.getHistogram().getHistogram()) {
-    		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB() + " | Count: " + p.getCount());
-    	}
-    	
-    	System.out.println("-----------");
+//    	for (Pixel p : cube.getHistogram().getHistogram()) {
+//    		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB() + " | Count: " + p.getCount());
+//    	}
+//    	
+//    	System.out.println("-----------");
+	}
+	
+	private void printCubeHistogram (Cube cube) {
+    for (Pixel p : cube.getHistogram().getHistogram()) {
+		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB() + " | Count: " + p.getCount());
+	}
+	
+	System.out.println(" ");
 	}
 	
 	
