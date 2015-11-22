@@ -16,7 +16,7 @@ public class Main {
 	public static void main(String[] args) {
 		 
 	        try {
-	        	PixelReader pixelReader = new PixelReader("resources/kanye-west-banned-cover.jpg");
+	        	PixelReader pixelReader = new PixelReader("resources/asap.jpg");
 	        	Histogram histogram = pixelReader.getHistogram();
 	        	
 	        	MedianCut medianCut = new MedianCut(10);
@@ -26,7 +26,6 @@ public class Main {
 //	    		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB() + " | Count: " + p.getCount());
 //	        	}
 //	        	
-//	        	System.out.println("-----------------");
 
 	        	while (quantizedColorPalette.size() > 5) {
 		        	ArrayList<WeightedPixel> weightedColorPalette = new ArrayList<>();
@@ -49,14 +48,6 @@ public class Main {
 		    		}
 	        	}
 	        	
-	        	
-//	        	HashSet<Pixel> reducedColorPalette = new HashSet<>();
-
-//	        	reducedColorPalette.add(weightedColorPalette.get((int) weightedColorPalette.size()/4 - 1));
-//	        	reducedColorPalette.add(weightedColorPalette.get((int) weightedColorPalette.size()/2 - 1));
-//	        	reducedColorPalette.add(weightedColorPalette.get((int) (weightedColorPalette.size()/1.6 - 1)));
-//	        	reducedColorPalette.add(weightedColorPalette.get((int) (weightedColorPalette.size()/1.3 - 1)));
-//	        	reducedColorPalette.add(weightedColorPalette.get((int) (weightedColorPalette.size()-1)));
 	        	
 	        	for (Pixel p : quantizedColorPalette) {
 	    		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB());

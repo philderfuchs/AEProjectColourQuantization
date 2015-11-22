@@ -24,15 +24,9 @@ public class MedianCut {
       	Cube initialCube = new Cube(histogram);
       	initialCube.shrink();
     	cubeList.add(initialCube);
-//    	int i = 0;
 
     	do {
-//    		System.out.println(i++);
-//    		for (Cube c : cubeList) {
-//    			System.out.println(c.getSize());
-//    			this.printCubeHistogram(c);
-//    		}
-//    		System.out.println("-----------------");
+
     		
     		Cube cube = this.getBiggestCube(cubeList);
     		cubeList.remove(cube);
@@ -69,18 +63,6 @@ public class MedianCut {
 		for(Cube cube : cubeList) {
 			reducedColorPalette.add(cube.getCentroid());
 		}
-
-		
-//    	for (Pixel p : histogramOfChildCube1.getHistogram()) {
-//    		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB() + " | Count: " + p.getCount());
-//    	}
-//    	
-//    	System.out.println("-");
-//    	
-//    	for (Pixel p : histogramOfChildCube2.getHistogram()) {
-//    		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB() + " | Count: " + p.getCount());
-//    	}
-
 		
 		return reducedColorPalette;
 	}
