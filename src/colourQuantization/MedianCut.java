@@ -26,8 +26,6 @@ public class MedianCut {
     	cubeList.add(initialCube);
 
     	do {
-
-    		
     		Cube cube = this.getBiggestCube(cubeList);
     		cubeList.remove(cube);
         	Colors colorWithLongestDistance = cube.getLongestDistance();
@@ -69,11 +67,6 @@ public class MedianCut {
 	
 	private Cube getBiggestCube(ArrayList<Cube> cubeList){
 		Collections.sort(cubeList);
-		for (Cube cube : cubeList) {
-			if (cube.getHistogram().getHistogram().size() > 1) {
-				return cube;
-			}
-		}
 		return cubeList.get(0);
 	}
 	
@@ -101,19 +94,6 @@ public class MedianCut {
 			break;
     	}
     	
-//    	for (Pixel p : cube.getHistogram().getHistogram()) {
-//    		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB() + " | Count: " + p.getCount());
-//    	}
-//    	
-//    	System.out.println("-----------");
-	}
-	
-	private void printCubeHistogram (Cube cube) {
-    for (Pixel p : cube.getHistogram().getHistogram()) {
-		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB() + " | Count: " + p.getCount());
-	}
-	
-	System.out.println(" ");
 	}
 	
 	

@@ -16,10 +16,10 @@ public class Main {
 	public static void main(String[] args) {
 		 
 	        try {
-	        	PixelReader pixelReader = new PixelReader("resources/drake.jpg");
+	        	PixelReader pixelReader = new PixelReader("resources/macmiller.png");
 	        	Histogram histogram = pixelReader.getHistogram();
 	        	
-	        	MedianCut medianCut = new MedianCut(10);
+	        	MedianCut medianCut = new MedianCut(5);
 	        	HashSet<Pixel> quantizedColorPalette = medianCut.quantize(histogram);
 	        	
 //	        	for (Pixel p : quantizedColorPalette) {
