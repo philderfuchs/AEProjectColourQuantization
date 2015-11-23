@@ -2,9 +2,9 @@ package colourQuantization;
 
 public class WeightedPixel extends Pixel {
 	
-	private int weight;
+	private double weight;
 	
-	public WeightedPixel(Pixel p, int weight) {
+	public WeightedPixel(Pixel p, double weight) {
 		super(p.getR(), p.getG(), p.getB(), p.getCount());
 		this.weight = weight;
 	}
@@ -20,11 +20,11 @@ public class WeightedPixel extends Pixel {
 		}
 	}
 
-	public int getWeight() {
+	public double getWeight() {
 		return weight;
 	}
 
-	public void setWeight(int weight) {
+	public void setWeight(double weight) {
 		this.weight = weight;
 	}
 

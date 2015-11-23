@@ -12,9 +12,9 @@ public class MedianCut {
 
 	public MedianCut(int count) {
 		this.count = count;
-		if((count % 2) == 1) {
-			this.count++;
-		}
+//		if((count % 2) == 1) {
+//			this.count++;
+//		}
 	}
 	
 	public HashSet<Pixel> quantize(Histogram histogram){

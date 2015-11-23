@@ -16,41 +16,21 @@ public class Main {
 	public static void main(String[] args) {
 		 
 	        try {
-	        	PixelReader pixelReader = new PixelReader("resources/asap.jpg");
+	        	PixelReader pixelReader = new PixelReader("resources/drake.jpg");
 	        	Histogram histogram = pixelReader.getHistogram();
 	        	
 	        	MedianCut medianCut = new MedianCut(10);
 	        	HashSet<Pixel> quantizedColorPalette = medianCut.quantize(histogram);
 	        	
 //	        	for (Pixel p : quantizedColorPalette) {
-//	    		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB() + " | Count: " + p.getCount());
+//	        		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB());
 //	        	}
-//	        	
-
-	        	while (quantizedColorPalette.size() > 5) {
-		        	ArrayList<WeightedPixel> weightedColorPalette = new ArrayList<>();
-		        	int weight;
-		        	for(Pixel p1 : quantizedColorPalette) {
-		        		weight = 0;
-			        	for(Pixel p2 : quantizedColorPalette) {
-			        		weight += calculateDistance(p1, p2);
-			        	}
-			        	weightedColorPalette.add(new WeightedPixel(p1, weight));
-		        	}
-		        	Collections.sort(weightedColorPalette);
-		    		for(Pixel p : quantizedColorPalette) {
-		    			if(p.getR() == weightedColorPalette.get(0).getR() &&
-		    					p.getG() == weightedColorPalette.get(0).getG() &&
-		    					p.getB() == weightedColorPalette.get(0).getB()) {
-		    				quantizedColorPalette.remove(p);
-		    				break;
-		    			}
-		    		}
-	        	}
 	        	
+	        	PaletteFilter paletteFiler = new PaletteFilter(5);
+	        	HashSet<Pixel> filteredPalette = paletteFiler.filterPalette(quantizedColorPalette);
 	        	
-	        	for (Pixel p : quantizedColorPalette) {
-	    		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB());
+	        	for (Pixel p : filteredPalette) {
+	        		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB());
 	        	}
 
 			} catch (IOException e) {
@@ -60,10 +40,7 @@ public class Main {
 		 
 	}
 	
-	public static int calculateDistance(Pixel p1, Pixel p2) {
-		return (int) Math.sqrt(Math.pow(Math.max(p1.getR(), p2.getR()) - Math.min(p1.getR(), p2.getR()) , 2) +
-				Math.pow(Math.max(p1.getG(), p2.getG()) - Math.min(p1.getG(), p2.getG()) , 2) + 
-				Math.pow(Math.max(p1.getB(), p2.getB()) - Math.min(p1.getB(), p2.getB()) , 2));
-	}
+	
+
 
 }
