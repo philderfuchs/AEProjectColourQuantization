@@ -16,21 +16,18 @@ public class Main {
 	public static void main(String[] args) {
 		 
 	        try {
-	        	PixelReader pixelReader = new PixelReader("resources/macmiller.png");
+	        	PixelReader pixelReader = new PixelReader("resources/lockitup.png");
 	        	Histogram histogram = pixelReader.getHistogram();
 	        	
-	        	MedianCut medianCut = new MedianCut(5);
+	        	MedianCut medianCut = new MedianCut(10);
 	        	HashSet<Pixel> quantizedColorPalette = medianCut.quantize(histogram);
-	        	
-//	        	for (Pixel p : quantizedColorPalette) {
-//	        		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB());
-//	        	}
 	        	
 	        	PaletteFilter paletteFiler = new PaletteFilter(5);
 	        	HashSet<Pixel> filteredPalette = paletteFiler.filterPalette(quantizedColorPalette);
 	        	
 	        	for (Pixel p : filteredPalette) {
-	        		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB());
+	        		System.out.println("Color: " + p.getR() + ", " + p.getG() + ", " + p.getB() + 
+	        				" | " + String.format("#%02x%02x%02x", p.getR(), p.getG(), p.getB()));
 	        	}
 
 			} catch (IOException e) {

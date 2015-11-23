@@ -12,9 +12,6 @@ public class MedianCut {
 
 	public MedianCut(int count) {
 		this.count = count;
-//		if((count % 2) == 1) {
-//			this.count++;
-//		}
 	}
 	
 	public HashSet<Pixel> quantize(Histogram histogram){
@@ -39,7 +36,7 @@ public class MedianCut {
         	
         	int sum = 0;
     		for (Pixel p : cube.getHistogram().getHistogram()) {
-    			sum += p.get(colorWithLongestDistance)*p.getCount();
+    			sum += p.getCount();
     	    	if (sum <= colorValueSum/2) {
     				histogramOfChildCube1.add(p);
     	    	} else {
@@ -73,7 +70,7 @@ public class MedianCut {
 	private int getSumOfColorValues(Cube cube, Colors colorWithLongestDistance) {
 		int sum = 0;
 		for (Pixel p : cube.getHistogram().getHistogram()) {
-			sum += p.get(colorWithLongestDistance)*p.getCount();
+			sum += p.getCount();
 		}
 		return sum;
 	}

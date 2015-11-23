@@ -37,7 +37,11 @@ public class Cube implements Comparable {
 	}
 	
 	public Pixel getCentroid(){
-		return new Pixel(this.rMin+this.getrDistance()/2, this.gMin+this.getgDistance()/2, this.bMin+this.getbDistance()/2, 1);
+		int count = 0;
+		for (Pixel p : this.histogram.getHistogram()){
+			count+= p.getCount();
+		}
+		return new Pixel(this.rMin+this.getrDistance()/2, this.gMin+this.getgDistance()/2, this.bMin+this.getbDistance()/2, count);
 	}
 	
 	@Override
