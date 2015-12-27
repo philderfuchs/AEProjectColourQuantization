@@ -1,4 +1,5 @@
-package colourQuantization;
+package entities;
+
 
 public class Pixel implements Comparable {
 	private int r;
@@ -33,6 +34,12 @@ public class Pixel implements Comparable {
 		}
 		return 0;
 	}
+	
+	public boolean containsSameColorsAs(Pixel p) {
+		return p.getR() == this.r &&
+				p.getG() == this.g &&
+				p.getB() == this.b;
+	}
 
 	public int getR() {
 		return r;
@@ -65,8 +72,6 @@ public class Pixel implements Comparable {
 	public void setCount(int count) {
 		this.count = count;
 	}
-
-
 	
 	
 }

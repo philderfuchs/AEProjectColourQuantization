@@ -1,4 +1,4 @@
-package colourQuantization;
+package imageProcessors;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -10,6 +10,9 @@ import java.util.Hashtable;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
+
+import entities.Histogram;
+import entities.Pixel;
 
 public class PixelReader {
 

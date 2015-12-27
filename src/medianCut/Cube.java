@@ -1,10 +1,14 @@
-package colourQuantization;
+package medianCut;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Map;
 
 import javax.swing.text.html.HTMLDocument.Iterator;
+
+import entities.Colors;
+import entities.Histogram;
+import entities.Pixel;
 
 public class Cube implements Comparable {
 

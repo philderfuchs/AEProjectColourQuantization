@@ -1,8 +1,11 @@
-package colourQuantization;
+package medianCut;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+
+import entities.Pixel;
+import entities.WeightedPixel;
 
 public class PaletteFilter {
 
@@ -20,15 +23,16 @@ public class PaletteFilter {
 			weightedColorPalette.add(new WeightedPixel(p, 0));
 		}
 
-		double weight = 0;
+		double distance = 0;
 		while (weightedColorPalette.size() > this.count) {
 			for (WeightedPixel p1 : weightedColorPalette) {
-				weight = 0;
+				distance = 0;
 				for (WeightedPixel p2 : weightedColorPalette) {
-					weight += calculateDistance(p1, p2);
+					distance += calculateDistance(p1, p2);
 				}
-				p1.setWeight(weight);
-				System.out.println(weight);
+				p1.setWeight(this.adjustWeight(p1, distance));
+//        		System.out.println("Color: " + p1.getR() + ", " + p1.getG() + ", " + p1.getB() + 
+//        				" | weight: " + weight + " | " + String.format("#%02x%02x%02x", p1.getR(), p1.getG(), p1.getB()));
 			}
 
 			// remove pixel with worst weight
@@ -50,10 +54,15 @@ public class PaletteFilter {
 				+ Math.pow(p1.getG() - p2.getG(), 2)
 				+ Math.pow(p1.getB() - p2.getB(), 2)
 				);
-		double purity = Math.log(Math.max(Math.max(p1.getR(), p1.getG()), p1.getB()) - Math
-				.min(Math.min(p1.getR(), p1.getG()), p1.getB()));
-		double count = Math.log(p1.getCount());
-		return euklDistance*purity*count;
+
+		return euklDistance;
+	}
+	
+	private double adjustWeight(Pixel p, double weight) {
+		double purity = Math.log(Math.max(Math.max(p.getR(), p.getG()), p.getB()) - Math
+				.min(Math.min(p.getR(), p.getG()), p.getB()));
+		double count = Math.log(p.getCount());
+		return Math.pow(weight, 2)*purity*count;
 	}
 
 }

@@ -1,4 +1,5 @@
-package colourQuantization;
+package entities;
+
 
 public class WeightedPixel extends Pixel {
 	

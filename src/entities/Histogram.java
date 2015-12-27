@@ -1,4 +1,4 @@
-package colourQuantization;
+package entities;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -73,6 +73,14 @@ public class Histogram {
 	
 	public int getLength() {
 		return histogram.size();
+	}
+	
+	public int getCountOfPixels() {
+		int count = 0;
+		for (Pixel p : histogram) {
+			count+=p.getCount();
+		}
+		return count;
 	}
 	
 	public Pixel get(int index){
