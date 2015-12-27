@@ -63,6 +63,7 @@ public class PixelReader {
 			pixelList.add(new Pixel(c.getRed(), c.getGreen(), c.getBlue(), pixelMap.get(i)));
 		}
 		Histogram histogram = new Histogram (pixelList);
+		System.out.println(histogram.getLength());
 				
 		return histogram;
 	}

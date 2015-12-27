@@ -21,11 +21,22 @@ public class HistogramWithMean implements Comparable {
 
 	@Override
 	public int compareTo(Object histogramWithMean) {
-		long thisWeight = this.histogram.getCountOfPixels()
-				* (int) Math.sqrt(getPurity(this.mean));
-		long otherWeight = ((HistogramWithMean) histogramWithMean)
-				.getHistogram().getCountOfPixels()
-				* (int) Math.sqrt(getPurity(((HistogramWithMean) histogramWithMean).getMean()));
+		// long thisWeight = this.histogram.getCountOfPixels();
+		// * (int) Math.sqrt(getPurity(this.mean));
+		// long otherWeight = ((HistogramWithMean) histogramWithMean)
+		// .getHistogram().getCountOfPixels();
+		// * (int) Math.sqrt(getPurity(((HistogramWithMean)
+		// histogramWithMean).getMean()));
+
+		double thisWeight = getPurity(this.mean);
+//				* Math.log(this.histogram.getCountOfPixels());
+		double otherWeight = getPurity(((HistogramWithMean) histogramWithMean)
+				.getMean());
+//				* Math.log(((HistogramWithMean) histogramWithMean)
+//						.getHistogram().getCountOfPixels());
+
+//		System.out.println(this.histogram.getCountOfPixels());
+
 		if (thisWeight < otherWeight) {
 			return 1;
 		} else if (thisWeight == otherWeight) {

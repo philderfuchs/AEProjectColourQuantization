@@ -13,6 +13,8 @@ import java.util.HashSet;
 
 import javax.imageio.ImageIO;
 
+import visualisation.ColorVis;
+import visualisation.ImageCreater;
 import kMeans.KMeans;
 import medianCut.MedianCut;
 import medianCut.PaletteFilter;
@@ -22,37 +24,35 @@ import entities.Pixel;
 public class Main {
 
 	public static void main(String[] args) {
+		// ImageCreater imageCreator = new ImageCreater();
+		// imageCreator.createImage();
 
 		try {
-			PixelReader pixelReader = new PixelReader(
-					"resources/kanye-west-banned-cover.jpg");
+			PixelReader pixelReader = new PixelReader("resources/Aufgabe3/NS.png");
 			Histogram histogram = pixelReader.getHistogram();
 			// System.out.println(histogram.getHistogram().size());
 
-			// for (int i = 1; i <= 110; i++) {
-			//
-			// if (i == 10) {
-			// System.out.println("--------------");
-			// }
-			// long start = System.currentTimeMillis();
-			
-			
-			HashSet<Pixel> quantizedColorPalette = reduceByKMeans(histogram);
+			for (int i = 1; i <= 110; i++) {
 
-//			HashSet<Pixel> quantizedColorPalette = reduceByMedianCut(histogram);
-			
-			 for (Pixel p : quantizedColorPalette) {
-				 System.out.println("Color: " + p.getR() + ", " + p.getG() + ", "
-				 + p.getB() +
-				 " | " + String.format("#%02x%02x%02x", p.getR(), p.getG(),
-				 p.getB()));
+				if (i == 10) {
+					System.out.println("--------------");
+				}
+				long start = System.currentTimeMillis();
+				
+				reduceByMedianCut(histogram);
+
+//				HashSet<Pixel> quantizedColorPalette = reduceByKMeans(histogram);
+//				 ColorVis colorVis1 = new ColorVis(quantizedColorPalette,
+//				 "K-Means");
+//				 colorVis1.visualizePalette();
+//				 ColorVis colorVis2 = new ColorVis(quantizedColorPalette,
+//				 "MedianCut");
+//				 colorVis2.visualizePalette();
+
+				long end = System.currentTimeMillis();
+				System.out.println(end - start);
+				System.gc();
 			}
-			// long end = System.currentTimeMillis();
-			// System.out.println(end - start);
-			// System.gc();
-
-
-			// }
 
 		} catch (IOException e) {
 			System.err.println("Error while creating pixelReader");
@@ -60,15 +60,17 @@ public class Main {
 		}
 
 	}
+	
+	private static HashSet<Pixel> reduceByMedianCut(Histogram histogram) {
+		MedianCut medianCut = new MedianCut(2);
+//		return medianCut.quantizeWithFilter(histogram, 10);
+		return medianCut.quantize(histogram);
+
+	}
 
 	private static HashSet<Pixel> reduceByKMeans(Histogram histogram) {
 		ColorQuantizer kMeans = new KMeans(5);
 		return kMeans.quantize(histogram);
-	}
-
-	
-	private static HashSet<Pixel> reduceByMedianCut(Histogram histogram) {
-		MedianCut medianCut = new MedianCut(5);
-		return medianCut.quantizeWithFilter(histogram, 10);
+		// return kMeans.quantizeWithFilter(histogram, 10);
 	}
 }
