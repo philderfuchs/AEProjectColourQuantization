@@ -28,31 +28,32 @@ public class Main {
 		// imageCreator.createImage();
 
 		try {
-			PixelReader pixelReader = new PixelReader("resources/Aufgabe3/NS.png");
+			PixelReader pixelReader = new PixelReader("resources/kanye.jpg");
 			Histogram histogram = pixelReader.getHistogram();
 			// System.out.println(histogram.getHistogram().size());
 
-			for (int i = 1; i <= 110; i++) {
-
-				if (i == 10) {
-					System.out.println("--------------");
-				}
-				long start = System.currentTimeMillis();
+//			for (int i = 1; i <= 109; i++) {
+//
+//				if (i == 10) {
+//					System.out.println("--------------");
+//				}
+//				long start = System.currentTimeMillis();
 				
-				reduceByMedianCut(histogram);
+				 
 
-//				HashSet<Pixel> quantizedColorPalette = reduceByKMeans(histogram);
-//				 ColorVis colorVis1 = new ColorVis(quantizedColorPalette,
-//				 "K-Means");
-//				 colorVis1.visualizePalette();
+//				reduceByKMeans(histogram);
+				
+				 ColorVis colorVis1 = new ColorVis(reduceByKMeans(histogram),
+				 "K-Means");
+				 colorVis1.visualizePalette();
 //				 ColorVis colorVis2 = new ColorVis(quantizedColorPalette,
 //				 "MedianCut");
 //				 colorVis2.visualizePalette();
 
-				long end = System.currentTimeMillis();
-				System.out.println(end - start);
-				System.gc();
-			}
+//				long end = System.currentTimeMillis();
+//				System.out.println(end - start);
+//				System.gc();
+//			}
 
 		} catch (IOException e) {
 			System.err.println("Error while creating pixelReader");
@@ -62,8 +63,8 @@ public class Main {
 	}
 	
 	private static HashSet<Pixel> reduceByMedianCut(Histogram histogram) {
-		MedianCut medianCut = new MedianCut(2);
-//		return medianCut.quantizeWithFilter(histogram, 10);
+		MedianCut medianCut = new MedianCut(5);
+//		return medianCut.quantizeWithFilter(histogram, 4);
 		return medianCut.quantize(histogram);
 
 	}

@@ -45,7 +45,7 @@ public class KMeans implements ColorQuantizer {
 
 		HashSet<Pixel> reducedColorPalette = new HashSet();
 
-		for(HistogramWithMean h : resultHistograms) {
+		for (HistogramWithMean h : resultHistograms) {
 			h.getMean().setCount(h.getHistogram().getLength());
 			reducedColorPalette.add(h.getMean());
 			System.out.println(h.getMean().getCount());
@@ -68,19 +68,6 @@ public class KMeans implements ColorQuantizer {
 			histogramsWithMeans.add(new HistogramWithMean(
 					new Pixel(r, g, b, 1), new Histogram()));
 		}
-//		int temp = 255 / (means + 1);
-//		int r = 0;
-//		int g = 0;
-//		int b = 0;
-//
-//		for (int i = 0; i < means; i++) {
-//			r += temp;
-//			g += temp;
-//			b += temp;
-//			// System.out.println(r + " | " + g + " | " + b);
-//			histogramsWithMeans.add(new HistogramWithMean(
-//					new Pixel(r, g, b, 1), new Histogram()));
-//		}
 
 		boolean meanChanged = true;
 		while (meanChanged) {
@@ -115,12 +102,9 @@ public class KMeans implements ColorQuantizer {
 
 			for (HistogramWithMean h : histogramsWithMeans) {
 				if (h.getHistogram().getLength() == 0) {
-					// histogramsWithMeans.remove(h);
-					// int r = (int) (Math.random() * 255);
-					// int g = (int) (Math.random() * 255);
-					// int b = (int) (Math.random() * 255);
-					// histogramsWithMeans.add(new HistogramWithMean(new
-					// Pixel(r, g, b, 1), new Histogram()));
+//					h.setMean(new Pixel((int) (Math.random() * 255),
+//							(int) (Math.random() * 255),
+//							(int) (Math.random() * 255), 1));
 					continue;
 				}
 

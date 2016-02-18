@@ -1,7 +1,7 @@
 package entities;
 
 
-public class Pixel implements Comparable {
+public class Pixel implements Comparable<Pixel> {
 	private int r;
 	private int g;
 	private int b;
@@ -15,11 +15,6 @@ public class Pixel implements Comparable {
 		this.count = count;
 	}
 	
-	@Override
-	public int compareTo(Object o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
 	public int get(Colors c) {
 		switch (c) {
@@ -71,6 +66,13 @@ public class Pixel implements Comparable {
 
 	public void setCount(int count) {
 		this.count = count;
+	}
+
+
+	@Override
+	public int compareTo(Pixel o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

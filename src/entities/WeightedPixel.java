@@ -11,7 +11,7 @@ public class WeightedPixel extends Pixel {
 	}
 	
 	@Override
-	public int compareTo(Object pixel) {
+	public int compareTo(Pixel pixel) {
 		if (this.weight > ((WeightedPixel) pixel).getWeight()) {
 			return 1;
 		} else if (this.weight == ((WeightedPixel) pixel).getWeight()){
